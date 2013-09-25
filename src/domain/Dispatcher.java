@@ -8,7 +8,7 @@ import java.util.*;
  */
 public abstract class Dispatcher implements Runnable {
     private float arrivalRate;
-    private ArrayList<Queue> queues;
+    private ArrayList<TypeHeap> heaps;
     private Hashtable<String, CustomerType> customerTypes;
     private long sleepTime = 2000;
     private boolean running = true;
@@ -40,17 +40,17 @@ public abstract class Dispatcher implements Runnable {
         this.sleepTime = sleepTime;
     }
 
-    public ArrayList<Queue> getQueues() {
-        return this.queues;
+    public ArrayList<TypeHeap> getQueues() {
+        return this.heaps;
     }
 
-    public void setQueues(ArrayList<Queue> queues) {
-        this.queues = queues;
+    public void setQueues(ArrayList<TypeHeap> queues) {
+        this.heaps = queues;
     }
 
-    public void addQueue(Queue queue) {
-        if(this.queues != null) {
-            this.queues.add(queue);
+    public void addQueue(TypeHeap queue) {
+        if(this.heaps != null) {
+            this.heaps.add(queue);
         }
     }
 
@@ -127,20 +127,20 @@ public abstract class Dispatcher implements Runnable {
 
     public void assignCustomers(Customer[] customers) {
         for(int i=0;i<customers.length;i++) {
-            getQueue(customers[i].getType()).enqueue(customers[i]);
+        	getHeap(customers[i].getType()).enqueue(customers[i]);
         }
     }
 
-    public Queue getQueue(String type) {
+    public TypeHeap getHeap(String type) {
         /*
          * The logic here
          * get queue with the least amount of customers of type
          * if all the same we pick the first one
          */
-        Queue temp = null;
-        Iterator<Queue> iter = this.queues.iterator();
+    	TypeHeap temp = null;
+        Iterator<Queue> iter = this.heaps.iterator();
         while(iter.hasNext()) {
-            Queue q = iter.next();
+        	TypeHeap q = iter.next();
             if(q.hasType(type) && (temp == null  || q.getLength()<temp.getLength())) {
                 temp = q;
             }

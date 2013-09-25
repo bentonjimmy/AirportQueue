@@ -1,14 +1,12 @@
 package domain;
 
 import java.util.Vector;
-import java.util.PriorityQueue;
 
 public class Heap 
 {
 	public Heap()
 	{
 		vector = new Vector<Customer>();
-		//vector.setSize(30);
 	}
 	
 	/**
@@ -21,6 +19,11 @@ public class Heap
 		return vector.size();
 	}
 	
+	public boolean isEmpty()
+	{
+		return vector.size() == 0;
+	}
+	
 	public Vector<Customer> getVector()
 	{
 		return vector;
@@ -31,11 +34,69 @@ public class Heap
 		this.vector = vector;
 	}
 	
-	public void addCustomer()
+	/**
+	 * Adds the given customer to the heap.
+	 * @param customer - the Customer to add
+	 */
+	public void addCustomer(Customer customer)
 	{
-		
+		if(customer != null)
+		{
+			vector.add(customer);
+			if(vector.size() > 1)
+			{
+				bubbleUp();
+			}
+		}
 	}
 	
+	protected void bubbleUp()
+	{
+		Customer parent = null;
+		int parentPos;
+		int bubblePos = vector.size() - 1;
+		Customer bubbleNode = vector.get(bubblePos);
+		if(bubblePos % 2 == 1) //odd
+		{
+			parentPos = (bubblePos - 1) / 2;
+		}
+		else //even
+		{
+			parentPos = (bubblePos - 2) / 2;
+		}
+		parent = vector.get(parentPos);
+		while(bubbleNode.getArrivalTime() < parent.getArrivalTime())
+		{
+			//Swap Customers
+			Customer swap = bubbleNode;
+			vector.set(bubblePos, parent);//move the parent down
+			vector.set(parentPos, swap);
+			bubblePos = parentPos; //update position of the bubbled node
+			
+			if(bubblePos != 0)
+			{
+				if(bubblePos % 2 == 1) //odd
+				{
+					parentPos = (bubblePos - 1) / 2;
+				}
+				else //even
+				{
+					parentPos = (bubblePos - 2) / 2;
+				}
+			}
+			else
+			{
+				parent = buCustomer;
+			}
+			parent = vector.get(parentPos);
+			bubbleNode = vector.get(bubblePos);
+		}
+	}
+	
+	/**
+	 * Removes the Customer at the top of the heap and returns it.
+	 * @return Customer at the top of the heap
+	 */
 	public Customer removeCustomer()
 	{
 		Customer temp = vector.firstElement(); //Make temp copy of the root
@@ -53,7 +114,8 @@ public class Heap
 	{
 		int i = 0;
 		Customer child = null;
-		Customer z = vector.firstElement();
+		Customer bubbleNode = vector.firstElement();
+		int bubblePos = 0; //the bubble node's position
 		
 		if((2*i)+2 < vector.size()) //at least two nodes to check
 		{
@@ -74,35 +136,48 @@ public class Heap
 			i = (2*i)+1;
 		}
 		
-		while((vector.firstElement().getArrivalTime() > child.getArrivalTime()) &&
-				vector.size() >= (2*i)+1)//this needs to change
+		do
 		{
 			//Swap Customers
-			Customer swap = vector.firstElement();
-			vector.set(0, child);//the root
+			Customer swap = bubbleNode;
+			vector.set(bubblePos, child);//the node to be bubbled down
 			vector.set(i, swap);
 			
-			if((2*i)+1 == vector.size()) //only a right node
+			bubblePos = i; //update position of the bubbled node
+			
+			if((2*i)+1 >= vector.size()) 
 			{
-				child = vector.get((2*i)+1);
+				child = bdCustomer;
 				i = (2*i)+1;
 			}
-			else //at least two nodes to check
+			else //should have at least a left node
 			{
-				if(vector.get((2*i)+1).getArrivalTime() < vector.get((2*i)+2).getArrivalTime())
+				if((2*i)+2 < vector.size()) //at least two nodes to check
+				{
+					if(vector.get((2*i)+1).getArrivalTime() < vector.get((2*i)+2).getArrivalTime())
+					{
+						child = vector.get((2*i)+1);
+						i = (2*i)+1;
+					}
+					else
+					{
+						child = vector.get((2*i)+2);
+						i = (2*i)+2;
+					}
+				}
+				else //only a left node to check
 				{
 					child = vector.get((2*i)+1);
 					i = (2*i)+1;
 				}
-				else
-				{
-					child = vector.get((2*i)+2);
-					i = (2*i)+2;
-				}
 			}
 			
-		}
+			bubbleNode = vector.get(bubblePos);
+			
+		}while((bubbleNode.getArrivalTime() > child.getArrivalTime()));//this needs to change
 	}
 	
 	private Vector<Customer> vector;
+	private Customer bdCustomer = new Customer("Sentinel", 100000000, 0);
+	private Customer buCustomer = new Customer("Sentinel", -1, 0);
 }
