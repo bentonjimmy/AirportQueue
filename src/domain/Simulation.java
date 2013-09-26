@@ -19,7 +19,7 @@ public class Simulation {
     private Dispatcher dispatcher;
     private Observer observer;
     private ArrayList<ServiceStation> stations;
-    private ArrayList<Queue> queues;
+    private ArrayList<TypeHeap> heaps;
     private Config config;
     private long sleepTime = 1000;
     
@@ -39,7 +39,7 @@ public class Simulation {
             this.config = new Config(this.configpath);
             this.dispatcher = new SimpleDispatcher(0, 1);
             this.stations = new ArrayList<ServiceStation>();
-            this.queues = new ArrayList<Queue>();
+            this.heaps = new ArrayList<TypeHeap>();
             //Holds values pulled from XML value that are used to create CustomerType objects
         	customerTypesBuilder = new ArrayList<Hashtable<String, String>>();
         	//Holds values pulled from XML value that are used to create Queue objects
@@ -84,12 +84,12 @@ public class Simulation {
 		this.stations = stations;
 	}
 
-	public ArrayList<Queue> getQueues() {
-		return queues;
+	public ArrayList<TypeHeap> getHeaps() {
+		return heaps;
 	}
 
-	public void setQueues(ArrayList<Queue> queues) {
-		this.queues = queues;
+	public void setHeaps(ArrayList<TypeHeap> queues) {
+		this.heaps = queues;
 	}
 
 	public Config getConfig() {
@@ -154,7 +154,7 @@ public class Simulation {
 		settings = config.settings();
     	dispatcher.setCustomerTypes(customerTable);
     	dispatcher.setMaxTicks(Long.parseLong(settings.get("timeout")));
-    	dispatcher.setQueues(getQueues());
+    	dispatcher.setHeaps(getHeaps());
     	dispatcher.setSleepTime((long) (Float.parseFloat(settings.get("tick"))*1000));
 	}
 	
@@ -179,14 +179,10 @@ public class Simulation {
 	
 	private void createQueues()
 	{
-		config.queues(queueIDs, queueTypes);
-    	Iterator<String> qIter = queueIDs.iterator();
-    	while(qIter.hasNext())
-    	{
-    		String stringID = qIter.next();
-    		queues.add(new Queue(stringID, queueTypes.get(stringID)));
-    	}
-    	for(Queue q: queues)
+    	heaps.add(new TypeHeap("First", "First Class"));
+		heaps.add(new TypeHeap("Coach", "Coach"));
+    	
+		for(TypeHeap q: heaps)
     	{
     		q.setObserver(observer);
     	}
@@ -205,17 +201,17 @@ public class Simulation {
     		while(alqIter.hasNext())
     		{
     			String ssq = alqIter.next();
-    			Iterator<Queue> queuesIter = queues.iterator();
+    			Iterator<TypeHeap> queuesIter = heaps.iterator();
     			while(queuesIter.hasNext())
     			{
-    				Queue qTemp = queuesIter.next();
+    				TypeHeap qTemp = queuesIter.next();
     				if(qTemp.getId().equals(ssq))
     				{
     					queuesToAdd.add(qTemp);
     				}
     			}
     		}
-    		stations.add(new PriorityServiceStation(ssID, ssTypes.get(ssID),  queuesToAdd));
+    		stations.add(new FirstClassServiceStation(ssID,  queuesToAdd));
     	}
     	for(ServiceStation s: stations)
     	{
@@ -245,7 +241,7 @@ public class Simulation {
     		Iterator<ServiceStation> statIter = stations.iterator();
     		while(statIter.hasNext())
     		{
-    			PriorityServiceStation pss = (PriorityServiceStation) statIter.next();
+    			FirstClassServiceStation pss = (FirstClassServiceStation) statIter.next();
     			pss.start();
     			//pss.run();
     		}
@@ -267,7 +263,7 @@ public class Simulation {
     
     private boolean checkQueues()
     {
-    	for(Queue q: queues)
+    	for(Queue q: heaps)
     	{
     		if(q.getLength() > 0)
     		{

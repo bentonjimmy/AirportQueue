@@ -93,6 +93,7 @@ public class Config {
             return this.getSettings("settings");
     }
       
+    
     public void queues(ArrayList<String> queueIDs, Hashtable<String, ArrayList<String>> queueTypes){  
     	NodeList nList = this.config.getElementsByTagName("queue");  
     	

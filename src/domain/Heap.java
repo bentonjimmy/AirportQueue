@@ -19,6 +19,14 @@ public class Heap
 		return vector.size();
 	}
 	
+	public Observer getObserver() {
+		return observer;
+	}
+
+	public void setObserver(Observer observer) {
+		this.observer = observer;
+	}
+	
 	public boolean isEmpty()
 	{
 		return vector.size() == 0;
@@ -178,6 +186,7 @@ public class Heap
 	}
 	
 	private Vector<Customer> vector;
+	private Observer observer;
 	private Customer bdCustomer = new Customer("Sentinel", 100000000, 0);
 	private Customer buCustomer = new Customer("Sentinel", -1, 0);
 }

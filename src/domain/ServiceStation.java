@@ -14,11 +14,11 @@ import java.util.UUID;
  *
  *
  */
-public class ServiceStation implements Runnable{
+public abstract class ServiceStation implements Runnable{
     private String id;
 	private ArrayList<String> customerTypes;
 	private Customer customer;
-	private ArrayList<Queue> queues;
+	private ArrayList<TypeHeap> queues;
 	private long sleepTime;
     private boolean open = true;
     private int defaultSleep = 1000;
@@ -26,13 +26,13 @@ public class ServiceStation implements Runnable{
 	
 	public ServiceStation()
 	{
-		this(UUID.randomUUID().toString(), new ArrayList<String>(), new ArrayList<Queue>());
+		this(UUID.randomUUID().toString(), new ArrayList<String>(), new ArrayList<TypeHeap>());
 	}
 
-    public ServiceStation(String id, ArrayList<String> customerTypes, ArrayList<Queue> queues) {
+    public ServiceStation(String id, ArrayList<String> customerTypes, ArrayList<TypeHeap> heaps) {
         this.setId(id);
         this.setTypes(customerTypes);
-        this.setQueues(queues);
+        this.setHeaps(heaps);
         this.setSleepTime(defaultSleep);
     }
 
@@ -76,11 +76,11 @@ public class ServiceStation implements Runnable{
 		this.customer = customer;
 	}
 
-	public ArrayList<Queue> getQueues() {
+	public ArrayList<TypeHeap> getHeaps() {
 		return queues;
 	}
 
-	public void setQueues(ArrayList<Queue> queues) {
+	public void setHeaps(ArrayList<TypeHeap> queues) {
 		this.queues = queues;
 	}
 
@@ -92,39 +92,8 @@ public class ServiceStation implements Runnable{
         this.sleepTime = sleepTime;
     }
     
-    public synchronized void getNextCustomer()
-    {
-    	long earliestArrival = -1;
-    	Queue chosenQueue = null;
-    	Customer tempCustomer = null;
-    	
-    	Iterator<Queue> queueIter = queues.iterator();
-    	while(queueIter.hasNext()) //Iterate through queues
-    	{
-    		Queue tempQueue = queueIter.next();
-    		Iterator<String> typeIter = customerTypes.iterator();
-    		while(typeIter.hasNext()) //Iterate through Service Station types
-    		{
-    			String tempType = typeIter.next();
-    			Customer c = tempQueue.topCustomer(tempType); //get the next available customer in the queue
-    			if(c != null)
-    			{
-    				if(earliestArrival == -1 || c.getArrivalTime() < earliestArrival)//Check if c arrived earlier
-    				{
-    					tempCustomer = c;
-    					chosenQueue = tempQueue;
-    					earliestArrival = c.getArrivalTime();
-    				}
-    			}
-    		}
-    	}
-    	
-    	if(tempCustomer != null) //remove the customer with correct type and earliest arrive
-    	{
-    		customer = tempCustomer;
-    		chosenQueue.dequeue(customer);
-    	}
-    }
+    public abstract void getNextCustomer();
+    
     
     public void start(){
     	(new Thread(this)).start();
