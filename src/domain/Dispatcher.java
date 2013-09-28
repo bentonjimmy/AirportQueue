@@ -145,11 +145,12 @@ public abstract class Dispatcher implements Runnable {
         return temp;
     }
 
-    public boolean hasCustomers() {
+   // public boolean hasCustomers() {
         /*
          * dispatcher should send end signal
          * when there is no more customers to spawn
          */
+    	/*
         String type = null;
         CustomerType customerType;
         Enumeration keys = this.getCustomerTypes().keys();
@@ -162,6 +163,7 @@ public abstract class Dispatcher implements Runnable {
         }
         return false;
     }
-
+    	 */
+    	
     abstract public Customer[] dispatch(Long time);
 }

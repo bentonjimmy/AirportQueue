@@ -32,11 +32,11 @@ public class Simulation {
     private Hashtable<String, String> settings;
     private Hashtable<String, CustomerType> customerTable;
     
-    public Simulation(String config) {
+    public Simulation(Config config) {
         
         try {  
-            this.configpath = config;
-            this.config = new Config(this.configpath);
+            this.config = config;
+            
             this.dispatcher = new SimpleDispatcher(0, 1);
             this.stations = new ArrayList<ServiceStation>();
             this.heaps = new ArrayList<TypeHeap>();
@@ -151,17 +151,14 @@ public class Simulation {
 
 	private void createDispatcher()
 	{
-		settings = config.settings();
     	dispatcher.setCustomerTypes(customerTable);
-    	dispatcher.setMaxTicks(Long.parseLong(settings.get("timeout")));
+    	dispatcher.setMaxTicks(config.getSimLength());
     	dispatcher.setHeaps(getHeaps());
     	dispatcher.setSleepTime((long) (Float.parseFloat(settings.get("tick"))*1000));
 	}
 	
 	private void createCustomerTypes()
 	{
-		/*Build the CustomerTypes from XML file*/
-		customerTypesBuilder = config.customerTypes();
     	//Holds the CustomerTypes build from XML file
     	customerTable = new Hashtable<String, CustomerType>();
     	
@@ -169,9 +166,9 @@ public class Simulation {
     	String class2 = "Coach";
     	
     	customerTable.put(class1, new CustomerType(class1, "First Class Customers",
-    			FirstServiceTime, 1000));
+    			config.getFirstClassServiceTime()));
     	customerTable.put(class2, new CustomerType(class2, "Coach Class Customers",
-    			CoachServiceTime, 1000));
+    			config.getCoachClassServiceTime()));
 	}
 	
 	private void createQueues()
@@ -187,32 +184,12 @@ public class Simulation {
 	
 	private void createServiceStations()
 	{
-		config.stations(ssIDs, ssQueues, ssTypes);
-    	Iterator<String> ssIDIter = ssIDs.iterator();
-    	while(ssIDIter.hasNext())
-    	{
-    		String ssID = ssIDIter.next();
-    		ArrayList<TypeHeap> queuesToAdd = new ArrayList<TypeHeap>();
-    		ArrayList<String> alq = ssQueues.get(ssID);
-    		Iterator<String> alqIter = alq.iterator();
-    		while(alqIter.hasNext())
-    		{
-    			String ssq = alqIter.next();
-    			Iterator<TypeHeap> queuesIter = heaps.iterator();
-    			while(queuesIter.hasNext())
-    			{
-    				TypeHeap qTemp = queuesIter.next();
-    				if(qTemp.getId().equals(ssq))
-    				{
-    					queuesToAdd.add(qTemp);
-    				}
-    			}
-    		}
-    		stations.add(new FirstClassServiceStation("FC1", queuesToAdd));
-    		stations.add(new CoachServiceStation("CC1", queuesToAdd));
-    		stations.add(new CoachServiceStation("CC2", queuesToAdd));
-    		stations.add(new CoachServiceStation("CC3", queuesToAdd));
-    	}
+		//Add the heaps to the service station
+		stations.add(new FirstClassServiceStation("FC1", heaps));
+		stations.add(new CoachServiceStation("CC1", heaps));
+		stations.add(new CoachServiceStation("CC2", heaps));
+		stations.add(new CoachServiceStation("CC3", heaps));
+    		
     	for(ServiceStation s: stations)
     	{
     		s.setObserver(observer);
@@ -258,19 +235,5 @@ public class Simulation {
     		observer.writeReport();
     		return;
     } 
-    
-    /*
-    private boolean checkQueues()
-    {
-    	for(TypeHeap q: heaps)
-    	{
-    		if(q.getSize() > 0)
-    		{
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-    */
     
 }

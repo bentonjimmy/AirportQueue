@@ -41,18 +41,5 @@ public class FirstClassServiceStation extends ServiceStation {
     		System.out.println("Dequeue Customer ID:" + tempCustomer.getId()+", Queue ID:" + chosenQueue.getId());
     	}
 	}
-	/*
-	private boolean checkCustomer(Queue q, String type, long earliestArrival)
-	{
-		if(q.topCustomer() != null)
-		{
-			return (q.topCustomer().getType().equals(type)) && (earliestArrival == -1 || q.topCustomer().getArrivalTime() < earliestArrival);
-		}
-		else
-		{
-			return false;
-		}
-	}
-	*/
 
 }
