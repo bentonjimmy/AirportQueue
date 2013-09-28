@@ -149,6 +149,14 @@ public class Simulation {
 		this.ssTypes = ssTypes;
 	}
 
+	public Observer getObserver() {
+		return observer;
+	}
+
+	public void setObserver(Observer observer) {
+		this.observer = observer;
+	}
+
 	private void createDispatcher()
 	{
     	dispatcher.setCustomerTypes(customerTable);

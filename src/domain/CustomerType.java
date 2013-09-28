@@ -12,14 +12,14 @@ package domain;
 public class CustomerType {
     private String name;
     private String description;
-    private int serviceTime;
+    private float serviceTime;
     //private int totalCustomers;
     private float dispatchingStake;
 
-    public CustomerType(String name, String description, int serviceTime) {
+    public CustomerType(String name, String description, float f) {
         this.setName(name);
         this.setDescription(description);
-        this.setServiceTime(serviceTime);
+        this.setServiceTime(f);
     }
 
     public String getName() {
@@ -38,11 +38,11 @@ public class CustomerType {
         this.description = description;
     }
 
-    public int getServiceTime() {
+    public float getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(int serviceTime) {
+    public void setServiceTime(float serviceTime) {
         this.serviceTime = serviceTime;
     }
 

@@ -10,10 +10,10 @@ public abstract class Dispatcher implements Runnable {
     private float arrivalRate;
     private ArrayList<TypeHeap> heaps;
     private Hashtable<String, CustomerType> customerTypes;
-    private long sleepTime = 2000;
+    private long sleepTime = 1000;
     private boolean running = true;
     private long tick = 0;
-    private long maxTicks = 30;
+    private float maxTicks = 30;
     private Observer observer;
 
     public float getArrivalRate() {
@@ -63,10 +63,17 @@ public abstract class Dispatcher implements Runnable {
     	this.customerTypes = customerTypes;
     }
 
-    public long getMaxTicks() {
+    public float getMaxTicks() {
         return maxTicks;
     }
 
+    public void setMaxTicks(float maxTicks)
+    {
+    	//maxTicks is in minutes
+    	//needs to be converted to milliseconds
+    	this.maxTicks = maxTicks *= 60000;
+    }
+    
     public void setMaxTicks(long maxTicks) {
         this.maxTicks = maxTicks;
     }

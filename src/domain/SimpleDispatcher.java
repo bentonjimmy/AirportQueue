@@ -23,7 +23,7 @@ public class SimpleDispatcher extends Dispatcher {
         String type = null;
         CustomerType customerType = null;
         //create number of customers based on the customer type distribution
-        Enumeration keys = this.getCustomerTypes().keys();
+        Enumeration<String> keys = this.getCustomerTypes().keys();
         while(keys.hasMoreElements()) {
             type = keys.nextElement().toString();
             customerType = this.getCustomerTypes().get(type);
