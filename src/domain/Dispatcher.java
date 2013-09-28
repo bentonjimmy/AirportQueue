@@ -40,15 +40,15 @@ public abstract class Dispatcher implements Runnable {
         this.sleepTime = sleepTime;
     }
 
-    public ArrayList<TypeHeap> getQueues() {
+    public ArrayList<TypeHeap> getHeaps() {
         return this.heaps;
     }
 
-    public void setQueues(ArrayList<TypeHeap> queues) {
+    public void setHeaps(ArrayList<TypeHeap> queues) {
         this.heaps = queues;
     }
 
-    public void addQueue(TypeHeap queue) {
+    public void addHeap(TypeHeap queue) {
         if(this.heaps != null) {
             this.heaps.add(queue);
         }
@@ -99,15 +99,12 @@ public abstract class Dispatcher implements Runnable {
                     assignCustomers(customers);
                 }
 
-                //if no more customers or out of time limit, exit thread
-                if(!this.hasCustomers() || this.tick >= this.getMaxTicks())
+                //if out of time limit, exit thread
+                if(this.tick >= this.getMaxTicks())
                 {
                     this.signalExit();
                     /*Remove below*/
-                    if(!this.hasCustomers())
-                    	System.out.println("No more customers");
-                    else
-                    	System.out.println("Exceeded Ticks");
+                    System.out.println("Maximum time exceeded");
                 }
                 //sleep for next tick
                 Thread.sleep(this.sleepTime);
@@ -127,7 +124,7 @@ public abstract class Dispatcher implements Runnable {
 
     public void assignCustomers(Customer[] customers) {
         for(int i=0;i<customers.length;i++) {
-        	getHeap(customers[i].getType()).enqueue(customers[i]);
+        	getHeap(customers[i].getType()).addCustomer(customers[i]);
         }
     }
 
@@ -138,10 +135,10 @@ public abstract class Dispatcher implements Runnable {
          * if all the same we pick the first one
          */
     	TypeHeap temp = null;
-        Iterator<Queue> iter = this.heaps.iterator();
+        Iterator<TypeHeap> iter = this.heaps.iterator();
         while(iter.hasNext()) {
         	TypeHeap q = iter.next();
-            if(q.hasType(type) && (temp == null  || q.getLength()<temp.getLength())) {
+            if(q.getType().equals(type) && (temp == null  || q.getSize()<temp.getSize())) {
                 temp = q;
             }
         }

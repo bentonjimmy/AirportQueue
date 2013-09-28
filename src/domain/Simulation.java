@@ -164,17 +164,14 @@ public class Simulation {
 		customerTypesBuilder = config.customerTypes();
     	//Holds the CustomerTypes build from XML file
     	customerTable = new Hashtable<String, CustomerType>();
-    	//Individual CustomerType parameters used in constructor
-    	Iterator <Hashtable<String, String>> ctbIter = customerTypesBuilder.iterator();
-    	while(ctbIter.hasNext())
-    	{
-    		Hashtable<String, String> custProperties = ctbIter.next();
-    		customerTable.put(custProperties.get("name"), new CustomerType(custProperties.get("name"), 
-    				custProperties.get("description"),
-    				//Integer.parseInt(custProperties.get("serviceTime")), 
-    				(int)(Float.parseFloat(custProperties.get("serviceTime"))*1000),
-    				Integer.parseInt(custProperties.get("totalCustomers"))));
-    	}
+    	
+    	String class1 = "First Class";
+    	String class2 = "Coach";
+    	
+    	customerTable.put(class1, new CustomerType(class1, "First Class Customers",
+    			FirstServiceTime, 1000));
+    	customerTable.put(class2, new CustomerType(class2, "Coach Class Customers",
+    			CoachServiceTime, 1000));
 	}
 	
 	private void createQueues()
@@ -195,7 +192,7 @@ public class Simulation {
     	while(ssIDIter.hasNext())
     	{
     		String ssID = ssIDIter.next();
-    		ArrayList<Queue> queuesToAdd = new ArrayList<Queue>();
+    		ArrayList<TypeHeap> queuesToAdd = new ArrayList<TypeHeap>();
     		ArrayList<String> alq = ssQueues.get(ssID);
     		Iterator<String> alqIter = alq.iterator();
     		while(alqIter.hasNext())
@@ -211,7 +208,10 @@ public class Simulation {
     				}
     			}
     		}
-    		stations.add(new FirstClassServiceStation(ssID,  queuesToAdd));
+    		stations.add(new FirstClassServiceStation("FC1", queuesToAdd));
+    		stations.add(new CoachServiceStation("CC1", queuesToAdd));
+    		stations.add(new CoachServiceStation("CC2", queuesToAdd));
+    		stations.add(new CoachServiceStation("CC3", queuesToAdd));
     	}
     	for(ServiceStation s: stations)
     	{
@@ -241,13 +241,11 @@ public class Simulation {
     		Iterator<ServiceStation> statIter = stations.iterator();
     		while(statIter.hasNext())
     		{
-    			FirstClassServiceStation pss = (FirstClassServiceStation) statIter.next();
+    			ServiceStation pss = (ServiceStation) statIter.next();
     			pss.start();
-    			//pss.run();
     		}
              
-             //dispatcher.run();
-    		while(dispatcher.isRunning() || checkQueues())
+    		while(dispatcher.isRunning())
     		{
     			try {
 					Thread.sleep(this.sleepTime);
@@ -261,16 +259,18 @@ public class Simulation {
     		return;
     } 
     
+    /*
     private boolean checkQueues()
     {
-    	for(Queue q: heaps)
+    	for(TypeHeap q: heaps)
     	{
-    		if(q.getLength() > 0)
+    		if(q.getSize() > 0)
     		{
     			return true;
     		}
     	}
     	return false;
     }
+    */
     
 }

@@ -25,10 +25,12 @@ public class FirstClassServiceStation extends ServiceStation {
     		if(th.getType().equals("First Class") && !th.isEmpty()) //First class and not empty
     		{
     			tempCustomer = th.removeCustomer();
+    			chosenQueue = th;
     		}
     		else if(th.getType().equals("Coach") && !th.isEmpty())
     		{
     			tempCustomer = th.removeCustomer();
+    			chosenQueue = th;
     		}
     			
     	}
