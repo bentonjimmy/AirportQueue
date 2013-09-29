@@ -227,7 +227,7 @@ public class Simulation {
     			pss.start();
     		}
              
-    		while(dispatcher.isRunning())
+    		while(dispatcher.isRunning() || checkQueues())
     		{
     			try {
 					Thread.sleep(this.sleepTime);
@@ -236,9 +236,22 @@ public class Simulation {
 					e.printStackTrace();
 				}
     		}
+    		
     		System.out.println("Simulation has ended");
     		observer.writeReport();
     		return;
     } 
+    
+    private boolean checkQueues()
+    {
+    	for(TypeHeap q: heaps)
+    	{
+    		if(q.getSize() > 0)
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     
 }

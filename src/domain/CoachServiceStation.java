@@ -17,7 +17,7 @@ public class CoachServiceStation extends ServiceStation
 	}
 
 	@Override
-	public synchronized void getNextCustomer() 
+	public void getNextCustomer() 
 	{
 		TypeHeap chosenQueue = null;
     	Customer tempCustomer = null;
@@ -38,7 +38,7 @@ public class CoachServiceStation extends ServiceStation
     	{
     		this.setCustomer(tempCustomer);
     		System.out.println("Dequeue Customer ID:" + tempCustomer.getId()+" of type "+ tempCustomer.getType() +
-    				", Queue ID:" + chosenQueue.getId());
+    				", Queue ID:" + chosenQueue.getId() + " Station Type: Coach");
     	}
 
 	}

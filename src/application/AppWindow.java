@@ -22,6 +22,13 @@ import domain.Config;
 import domain.Observer;
 import domain.Simulation;
 
+/**
+ * This class has is for the user interface for the program.  It provides the user with 
+ * text fields where they can enter in the program parameters.  In the center of the 
+ * window is where the results of the simulation will be printed.
+ * @author Jim Benton
+ *
+ */
 public class AppWindow {
 
 	private JFrame frame;
@@ -144,6 +151,9 @@ public class AppWindow {
 		tpDisplay.setEditable(false);
 	}
 
+	/**
+	 * Handles the actions performed once the "Run" button is pressed
+	 */
 	protected class BttnHandler implements ActionListener
 	{
 
@@ -160,12 +170,19 @@ public class AppWindow {
 					sim = new Simulation(config);
 					//run simulation
 					sim.build();
-					//setObserver(sim.getObserver());
+					observer = sim.getObserver();
+					observer.setTpDisplay(tpDisplay);
 					sim.start();
 				}
 			}
 		}
 		
+		/**
+		 * Validates the values entered into the window.  Messages are printed to the 
+		 * window if invalid values are provided.  If there are no invalid values then
+		 * the value "true" is returned.
+		 * @return boolean - if the form is valid or not
+		 */
 		public boolean validateForm()
 		{
 			boolean valid = true;
@@ -199,6 +216,11 @@ public class AppWindow {
 			return valid;
 		}
 		
+		/**
+		 * This method fills the Config object with the values supplied by the user.
+		 * If any values are not valid a message is printed in the application window.
+		 * @return boolean - Whether the values are valid or not.
+		 */
 		public boolean fillConfig()
 		{
 			boolean valid = true;

@@ -66,7 +66,7 @@ public class Customer {
 			wait = 1;
 		}
 		
-		return wait;
+		return wait * 1000;
 	}
 
 	public boolean equals(Object other)

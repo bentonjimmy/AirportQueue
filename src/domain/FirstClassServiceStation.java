@@ -13,7 +13,7 @@ public class FirstClassServiceStation extends ServiceStation {
 		super(id, null, heaps);
 	}
 	
-	public synchronized void getNextCustomer()
+	public void getNextCustomer()
 	{
     	TypeHeap chosenQueue = null;
     	Customer tempCustomer = null;
@@ -39,7 +39,7 @@ public class FirstClassServiceStation extends ServiceStation {
     	{
     		this.setCustomer(tempCustomer);
     		System.out.println("Dequeue Customer ID:" + tempCustomer.getId()+" of type "+ tempCustomer.getType() +
-    				", Queue ID:" + chosenQueue.getId());
+    				", Queue ID:" + chosenQueue.getId()  + " Station Type: First Class");
     	}
 	}
 

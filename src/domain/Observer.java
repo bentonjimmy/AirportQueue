@@ -2,6 +2,8 @@ package domain;
 
 import java.util.Calendar;
 
+import javax.swing.JTextPane;
+
 public class Observer 
 {
 	//Stats to collect
@@ -15,6 +17,7 @@ public class Observer
 	private long simulationStartTime = 0;
 	private long simulationEndTime = 0; 
 	private long totalTicks = 0;
+	private JTextPane tpDisplay;
 	
 	//Variables
 	private long sleepTime;
@@ -116,6 +119,14 @@ public class Observer
 		this.totalTicks = totalTicks;
 	}
 	
+	public JTextPane getTpDisplay() {
+		return tpDisplay;
+	}
+
+	public void setTpDisplay(JTextPane tpDisplay) {
+		this.tpDisplay = tpDisplay;
+	}
+
 	public void queueMessage(String queueID, int length)
 	{
 		if(length > this.getLongestQueueSize())
@@ -160,6 +171,6 @@ public class Observer
 		this.setSimulationEndTime(getCurrentTime());
 		//calculate total ticks based off of how much time passed in the simulation
 		this.setTotalTicks((this.getSimulationEndTime() - this.getSimulationStartTime()) / this.getSleepTime());
-		report.writeResult("src/Output.txt"); //Hard coded into this...
+		report.writeResult(tpDisplay);
 	}
 }

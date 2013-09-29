@@ -105,7 +105,7 @@ public class Heap
 	 * Removes the Customer at the top of the heap and returns it.
 	 * @return Customer at the top of the heap
 	 */
-	public Customer removeCustomer()
+	public synchronized Customer removeCustomer()
 	{
 		if(vector.size() > 0)
 		{
