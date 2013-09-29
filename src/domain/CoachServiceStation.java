@@ -37,7 +37,8 @@ public class CoachServiceStation extends ServiceStation
     	if(tempCustomer != null)
     	{
     		this.setCustomer(tempCustomer);
-    		System.out.println("Dequeue Customer ID:" + tempCustomer.getId()+", Queue ID:" + chosenQueue.getId());
+    		System.out.println("Dequeue Customer ID:" + tempCustomer.getId()+" of type "+ tempCustomer.getType() +
+    				", Queue ID:" + chosenQueue.getId());
     	}
 
 	}

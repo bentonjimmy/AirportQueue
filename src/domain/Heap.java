@@ -107,15 +107,24 @@ public class Heap
 	 */
 	public Customer removeCustomer()
 	{
-		Customer temp = vector.firstElement(); //Make temp copy of the root
-		vector.set(0, vector.lastElement()); //set the root to the last element
-		vector.remove(vector.size()-1);
-		if(vector.size() > 1) //must be at least one node to test root against
+		if(vector.size() > 0)
 		{
-			bubbleDown();
+			Customer temp = vector.firstElement(); //Make temp copy of the root
+			Customer le = vector.lastElement();
+				vector.set(0, le); //set the root to the last element
+				vector.remove(vector.size()-1);
+				if(vector.size() > 1) //must be at least one node to test root against
+					{
+						bubbleDown();
+					}
+			
+			
+			return temp;
 		}
-		
-		return temp;
+		else
+		{
+			return null;
+		}
 	}
 	
 	protected void bubbleDown()

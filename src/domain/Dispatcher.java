@@ -71,7 +71,7 @@ public abstract class Dispatcher implements Runnable {
     {
     	//maxTicks is in minutes
     	//needs to be converted to milliseconds
-    	this.maxTicks = maxTicks *= 1000;
+    	this.maxTicks = maxTicks;
     }
     
     public void setMaxTicks(long maxTicks) {
@@ -130,8 +130,11 @@ public abstract class Dispatcher implements Runnable {
      */
 
     public void assignCustomers(Customer[] customers) {
+    	TypeHeap temp;
         for(int i=0;i<customers.length;i++) {
-        	getHeap(customers[i].getType()).addCustomer(customers[i]);
+        	temp = getHeap(customers[i].getType());
+        	temp.addCustomer(customers[i]);
+        	System.out.println("Enqueue Customer ID:" + customers[i].getId()+", Queue ID:" + temp.getId());
         }
     }
 
