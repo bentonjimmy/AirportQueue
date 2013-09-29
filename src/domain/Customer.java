@@ -13,13 +13,13 @@ public class Customer {
     private String id;
     private String type;
     private long arrivalTime;
-    private float serviceTime;
+    private int serviceTime;
 
-    public Customer(String type, long arrivalTime, float serviceTime2) {
+    public Customer(String type, long arrivalTime, int serviceTime) {
         this.setId(UUID.randomUUID().toString());
         this.setType(type);
         this.setArrivalTime(arrivalTime);
-        this.setServiceTime(serviceTime2);
+        this.setServiceTime(serviceTime);
     }
 
     public String getId() {
@@ -50,12 +50,23 @@ public class Customer {
         this.arrivalTime = arrivalTime;
     }
     
-    public float getServiceTime() {
+    public int getServiceTime() {
 		return serviceTime;
 	}
 
-	public void setServiceTime(float serviceTime) {
+	public void setServiceTime(int serviceTime) {
 		this.serviceTime = serviceTime;
+	}
+	
+	public int serviceWait()
+	{
+		int wait = (int) ((Math.random() * 1000) % serviceTime);
+		if(wait < 1)
+		{
+			wait = 1;
+		}
+		
+		return wait;
 	}
 
 	public boolean equals(Object other)

@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class SimpleDispatcher extends Dispatcher {
     private int minCount = 0; //Min number of customers of a certain type to create at spawn
-    private int maxCount = 10;//Max number of customers of a certain type to create at spawn
+    private int maxCount = 4;//Max number of customers of a certain type to create at spawn
 
     public SimpleDispatcher(int minCount, int maxCount) {
         this.minCount = minCount;
@@ -27,11 +27,15 @@ public class SimpleDispatcher extends Dispatcher {
         while(keys.hasMoreElements()) {
             type = keys.nextElement().toString();
             customerType = this.getCustomerTypes().get(type);
-            rand = minCount + (int)(Math.random() * ((maxCount - minCount) + 1));
-            //spawn customers of this type and add to customer list
-            Customer[] customersOfType = customerType.spawn(rand, time);
-            for(Customer x : customersOfType) {
-                customers.add(x);
+            int toSpawn = (int)((Math.random() * 1000) % customerType.getArrivalSpread());
+            if(toSpawn == 0)
+            {
+	            rand = minCount + (int)(Math.random() * ((maxCount - minCount) + 1));
+	            //spawn customers of this type and add to customer list
+	            Customer[] customersOfType = customerType.spawn(rand, time);
+	            for(Customer x : customersOfType) {
+	                customers.add(x);
+	            }
             }
         }
         return customers.toArray(new Customer[customers.size()]);

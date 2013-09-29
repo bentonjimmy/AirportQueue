@@ -12,14 +12,15 @@ package domain;
 public class CustomerType {
     private String name;
     private String description;
-    private float serviceTime;
-    //private int totalCustomers;
+    private int serviceTime;
+    private int arrivalSpread;
     private float dispatchingStake;
 
-    public CustomerType(String name, String description, float f) {
+    public CustomerType(String name, String description, int f, int arrivalSpread) {
         this.setName(name);
         this.setDescription(description);
         this.setServiceTime(f);
+        this.setArrivalSpread(arrivalSpread);
     }
 
     public String getName() {
@@ -38,11 +39,11 @@ public class CustomerType {
         this.description = description;
     }
 
-    public float getServiceTime() {
+    public int getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(float serviceTime) {
+    public void setServiceTime(int serviceTime) {
         this.serviceTime = serviceTime;
     }
 
@@ -54,7 +55,15 @@ public class CustomerType {
         this.dispatchingStake = dispatchingStake;
     }
 
-    public Customer[] spawn(int number, long arrivalTime) {
+    public int getArrivalSpread() {
+		return arrivalSpread;
+	}
+
+	public void setArrivalSpread(int arrivalSpread) {
+		this.arrivalSpread = arrivalSpread;
+	}
+
+	public Customer[] spawn(int number, long arrivalTime) {
         //if there is less customers left
     	/*
         if(this.getTotalCustomers() < number) {

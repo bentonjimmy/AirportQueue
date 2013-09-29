@@ -71,7 +71,7 @@ public abstract class Dispatcher implements Runnable {
     {
     	//maxTicks is in minutes
     	//needs to be converted to milliseconds
-    	this.maxTicks = maxTicks *= 60000;
+    	this.maxTicks = maxTicks *= 1000;
     }
     
     public void setMaxTicks(long maxTicks) {
@@ -151,26 +151,6 @@ public abstract class Dispatcher implements Runnable {
         }
         return temp;
     }
-
-   // public boolean hasCustomers() {
-        /*
-         * dispatcher should send end signal
-         * when there is no more customers to spawn
-         */
-    	/*
-        String type = null;
-        CustomerType customerType;
-        Enumeration keys = this.getCustomerTypes().keys();
-        while(keys.hasMoreElements()) {
-            type = keys.nextElement().toString();
-            customerType = this.getCustomerTypes().get(type);
-            if(customerType.getTotalCustomers() > 0 ) {
-                return true;
-            }
-        }
-        return false;
-    }
-    	 */
     	
     abstract public Customer[] dispatch(Long time);
 }

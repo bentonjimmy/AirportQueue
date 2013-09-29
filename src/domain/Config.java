@@ -15,28 +15,28 @@ public class Config
 		this.setSimLength(0);
 	}
 	
-    public float getFirstClassArrivalRate() {
+    public int getFirstClassArrivalRate() {
 		return firstClassArrivalRate;
 	}
-	public void setFirstClassArrivalRate(float firstClassArrivalRate) {
+	public void setFirstClassArrivalRate(int firstClassArrivalRate) {
 		this.firstClassArrivalRate = firstClassArrivalRate;
 	}
-	public float getCoachClassArrivalRate() {
+	public int getCoachClassArrivalRate() {
 		return coachClassArrivalRate;
 	}
-	public void setCoachClassArrivalRate(float coachClassArrivalRate) {
+	public void setCoachClassArrivalRate(int coachClassArrivalRate) {
 		this.coachClassArrivalRate = coachClassArrivalRate;
 	}
-	public float getFirstClassServiceTime() {
+	public int getFirstClassServiceTime() {
 		return firstClassServiceTime;
 	}
-	public void setFirstClassServiceTime(float firstClassServiceTime) {
+	public void setFirstClassServiceTime(int firstClassServiceTime) {
 		this.firstClassServiceTime = firstClassServiceTime;
 	}
-	public float getCoachClassServiceTime() {
+	public int getCoachClassServiceTime() {
 		return coachClassServiceTime;
 	}
-	public void setCoachClassServiceTime(float coachClassServiceTime) {
+	public void setCoachClassServiceTime(int coachClassServiceTime) {
 		this.coachClassServiceTime = coachClassServiceTime;
 	}
 	public float getSimLength() {
@@ -46,9 +46,9 @@ public class Config
 		this.simLength = simLength;
 	}
 
-	private float firstClassArrivalRate;
-    private float coachClassArrivalRate;
-    private float firstClassServiceTime;
-    private float coachClassServiceTime;
+	private int firstClassArrivalRate;
+    private int coachClassArrivalRate;
+    private int firstClassServiceTime;
+    private int coachClassServiceTime;
     private float simLength;
 }

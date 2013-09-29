@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -10,7 +6,7 @@ import java.util.Set;
 import java.util.Hashtable;
 /**
  *
- * @author Cody
+ * @author Jim Benton
  */
 public class Simulation {
     
@@ -174,9 +170,9 @@ public class Simulation {
     	String class2 = "Coach";
     	
     	customerTable.put(class1, new CustomerType(class1, "First Class Customers",
-    			config.getFirstClassServiceTime()));
+    			config.getFirstClassServiceTime(), config.getFirstClassArrivalRate()));
     	customerTable.put(class2, new CustomerType(class2, "Coach Class Customers",
-    			config.getCoachClassServiceTime()));
+    			config.getCoachClassServiceTime(), config.getCoachClassArrivalRate()));
 	}
 	
 	private void createQueues()
@@ -194,6 +190,7 @@ public class Simulation {
 	{
 		//Add the heaps to the service station
 		stations.add(new FirstClassServiceStation("FC1", heaps));
+		stations.add(new FirstClassServiceStation("FC2", heaps));
 		stations.add(new CoachServiceStation("CC1", heaps));
 		stations.add(new CoachServiceStation("CC2", heaps));
 		stations.add(new CoachServiceStation("CC3", heaps));

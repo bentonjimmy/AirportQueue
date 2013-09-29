@@ -106,7 +106,7 @@ public abstract class ServiceStation implements Runnable{
                 if(customer != null)
                 {
                 	//adjust sleepTime to specific customer Type
-                	this.sleepTime =  customer.getServiceTime();
+                	this.sleepTime =  customer.serviceWait();
                 	observer.serviceMessage(customer.getArrivalTime());
                 }
                 else

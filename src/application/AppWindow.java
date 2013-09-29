@@ -137,9 +137,11 @@ public class AppWindow {
 		
 		JButton bttnRun = new JButton("Run");
 		panel_4.add(bttnRun);
+		bttnRun.addActionListener(new BttnHandler());
 		
 		tpDisplay = new JTextPane();
 		frame.getContentPane().add(tpDisplay, BorderLayout.CENTER);
+		tpDisplay.setEditable(false);
 	}
 
 	protected class BttnHandler implements ActionListener
@@ -157,9 +159,9 @@ public class AppWindow {
 					//create simulation
 					sim = new Simulation(config);
 					//run simulation
-					//sim.build();
+					sim.build();
 					//setObserver(sim.getObserver());
-					//sim.start();
+					sim.start();
 				}
 			}
 		}
@@ -167,27 +169,28 @@ public class AppWindow {
 		public boolean validateForm()
 		{
 			boolean valid = true;
-			if(txtCCArrivalRate.toString().isEmpty())
+			
+			if(txtCCArrivalRate.getText().isEmpty())
 			{
 				valid = false;
 				tpDisplay.setText("No value for Coach Class Arrival Rate\n");
 			}
-			else if(txtFCArrivalRate.toString().isEmpty())
+			else if(txtFCArrivalRate.getText().isEmpty())
 			{
 				valid = false;
 				tpDisplay.setText("No value for First Class Arrival Rate\n");
 			}
-			else if(txtCCServiceTime.toString().isEmpty())
+			else if(txtCCServiceTime.getText().isEmpty())
 			{
 				valid = false;
 				tpDisplay.setText("No value for Coach Class Service Time\n");
 			}
-			else if(txtFCServiceTime.toString().isEmpty())
+			else if(txtFCServiceTime.getText().isEmpty())
 			{
 				valid = false;
 				tpDisplay.setText("No value for First Class Service Time\n");
 			}
-			else if(txtSimLength.toString().isEmpty())
+			else if(txtSimLength.getText().isEmpty())
 			{
 				valid = false;
 				tpDisplay.setText("No value for Simulation Length\n");
@@ -202,11 +205,11 @@ public class AppWindow {
 			
 			try
 			{
-				config.setCoachClassArrivalRate(Float.parseFloat(txtCCArrivalRate.toString().trim()));
-				config.setCoachClassServiceTime(Float.parseFloat(txtCCServiceTime.toString().trim()));
-				config.setFirstClassArrivalRate(Float.parseFloat(txtFCArrivalRate.toString().trim()));
-				config.setFirstClassServiceTime(Float.parseFloat(txtFCServiceTime.toString().trim()));
-				config.setSimLength(Float.parseFloat(txtSimLength.toString().trim()));
+				config.setCoachClassArrivalRate(Integer.parseInt(txtCCArrivalRate.getText()));
+				config.setCoachClassServiceTime(Integer.parseInt(txtCCServiceTime.getText()));
+				config.setFirstClassArrivalRate(Integer.parseInt(txtFCArrivalRate.getText()));
+				config.setFirstClassServiceTime(Integer.parseInt(txtFCServiceTime.getText()));
+				config.setSimLength(Float.parseFloat(txtSimLength.getText()));
 			}
 			catch(Exception e)
 			{
