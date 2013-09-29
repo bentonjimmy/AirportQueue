@@ -158,7 +158,7 @@ public class Simulation {
     	dispatcher.setCustomerTypes(customerTable);
     	dispatcher.setMaxTicks(config.getSimLength());
     	dispatcher.setHeaps(getHeaps());
-    	dispatcher.setSleepTime((long) (Float.parseFloat(settings.get("tick"))*1000));
+    	dispatcher.setSleepTime(1000);
 	}
 	
 	private void createCustomerTypes()
