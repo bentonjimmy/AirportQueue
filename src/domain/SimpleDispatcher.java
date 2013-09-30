@@ -5,8 +5,9 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 /**
- * This will random number of customers arrived between minCount and maxCount
- * for each customer type
+ * This represents the dispatching of new Customers to queues.  Between 0 and 4 customers
+ * are assigned in a group to a certain queue.  How often a customer is assigned
+ * depends upon the value given by the user.
  */
 public class SimpleDispatcher extends Dispatcher {
     private int minCount = 0; //Min number of customers of a certain type to create at spawn
@@ -17,6 +18,9 @@ public class SimpleDispatcher extends Dispatcher {
         this.maxCount = maxCount;
     }
 
+    /**
+     * Dispatches a customer to a new queue
+     */
     public Customer[] dispatch(Long time) {
         ArrayList<Customer> customers = new ArrayList<Customer>();
         int rand = 0;
@@ -24,9 +28,15 @@ public class SimpleDispatcher extends Dispatcher {
         CustomerType customerType = null;
         //create number of customers based on the customer type distribution
         Enumeration<String> keys = this.getCustomerTypes().keys();
+        //Iterate through all Customer Types
         while(keys.hasMoreElements()) {
             type = keys.nextElement().toString();
             customerType = this.getCustomerTypes().get(type);
+            /*
+             * Using the value given by the user it determines if new customers should
+             * be created or not.  It creates a random number from 0 to the number 
+             * provided and if it is zero then new customers are created.
+             */
             int toSpawn = (int)((Math.random() * 1000) % customerType.getArrivalSpread());
             if(toSpawn == 0)
             {

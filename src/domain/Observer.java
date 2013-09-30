@@ -4,6 +4,12 @@ import java.util.Calendar;
 
 import javax.swing.JTextPane;
 
+/**
+ * The Observer receives reading from the simulation on the state of the simulation.
+ * At the end of the simulation it will create a report based off the simulation.
+ * @author Jim Benton
+ *
+ */
 public class Observer 
 {
 	//Stats to collect

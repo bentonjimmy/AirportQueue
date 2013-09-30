@@ -69,8 +69,6 @@ public abstract class Dispatcher implements Runnable {
 
     public void setMaxTicks(float maxTicks)
     {
-    	//maxTicks is in minutes
-    	//needs to be converted to milliseconds
     	this.maxTicks = maxTicks;
     }
     
@@ -99,7 +97,7 @@ public abstract class Dispatcher implements Runnable {
             while(running) {
                 //create customers based on the time
                 Customer[] customers = this.dispatch((this.tick * this.sleepTime));
-              //increase counter
+                //increase counter
                 this.tick++;
                 //assign customers to queues
                 if (customers != null && customers.length > 0) {
@@ -125,10 +123,11 @@ public abstract class Dispatcher implements Runnable {
     public void signalExit() {
         this.running = false;
     }
-    /*
-     *  Helper functions
-     */
 
+    /**
+     * Assigns Customers to a queue
+     * @param customers - An array of Customers that need to be assigned to a queue
+     */
     public void assignCustomers(Customer[] customers) {
     	TypeHeap temp;
         for(int i=0;i<customers.length;i++) {
@@ -138,6 +137,12 @@ public abstract class Dispatcher implements Runnable {
         }
     }
 
+    /**
+     * Finds the shortest queue that will fit a specific customer type
+     * @param type - The Customer type to find
+     * @return - Returns the TypeHeap that is of the given type and is the shortest 
+     * queue.
+     */
     public TypeHeap getHeap(String type) {
         /*
          * The logic here

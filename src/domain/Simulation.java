@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Hashtable;
 /**
- *
+ *This represents the entire simulation.  It retrieves all the values provided by
+ *the user from the Config object and creates all the objects needed to run the 
+ *simulation.  
  * @author Jim Benton
  */
 public class Simulation {
@@ -153,6 +155,7 @@ public class Simulation {
 		this.observer = observer;
 	}
 
+	//Creates the Dispatcher
 	private void createDispatcher()
 	{
     	dispatcher.setCustomerTypes(customerTable);
@@ -161,6 +164,7 @@ public class Simulation {
     	dispatcher.setSleepTime(1000);
 	}
 	
+	//Creates the CustomerType objects
 	private void createCustomerTypes()
 	{
     	//Holds the CustomerTypes build from XML file
@@ -175,6 +179,7 @@ public class Simulation {
     			config.getCoachClassServiceTime(), config.getCoachClassArrivalRate()));
 	}
 	
+	//Creates the queues
 	private void createQueues()
 	{
     	heaps.add(new TypeHeap("First", "First Class"));
@@ -186,6 +191,7 @@ public class Simulation {
     	}
 	}
 	
+	//Creates the Service Station
 	private void createServiceStations()
 	{
 		//Add the heaps to the service station
@@ -202,6 +208,7 @@ public class Simulation {
     	observer.setNumberOfServiceStations(stations.size());
 	}
 	
+	//Creates the Observer
 	private void createObserver()
 	{
 		observer = new Observer(this.getDispatcher().getSleepTime());
@@ -217,6 +224,11 @@ public class Simulation {
 
     }
     
+	/**
+	 * Begins the simulation.  Prints a message to the terminal when
+	 * the simulation starts and when it has ended.  It ends when the
+	 * maximum running time has occurred and all the queues are empty.
+	 */
     public void start(){
     		System.out.println("Simulation has started");
     		this.dispatcher.start();
@@ -242,6 +254,10 @@ public class Simulation {
     		return;
     } 
     
+    /**
+     * Check if all of the queues are empty or not.
+     * @return boolean - true if the queues are not empty
+     */
     private boolean checkQueues()
     {
     	for(TypeHeap q: heaps)

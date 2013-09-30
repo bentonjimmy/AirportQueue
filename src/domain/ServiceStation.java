@@ -4,14 +4,8 @@ import java.util.Iterator;
 import java.util.UUID;
 
 /**
- *
- * + Customer.Type[] customerTypes : may accept multiple customer types
- * + Customer customer : current customer being serviced
- * + ArrayList queues : list of queues from which this SS can pick next customer from
- * - void wakeUp(float time)
- * - Customer getCustomer() : picks up next Customer with the correct customerTypes from queues, earlier arrivalTime first if multiple available from multiple queues.
- * - void removeCustomer()
- *
+ * Abstract class that represents a Service Station.
+ * @author Jim Benton
  *
  */
 public abstract class ServiceStation implements Runnable{
@@ -99,6 +93,10 @@ public abstract class ServiceStation implements Runnable{
     	(new Thread(this)).start();
     }
     
+    /**
+     * This method is used to run the service station and is where
+     * the service station will get it's next Customer to service
+     */
     public void run() {
         try {
             while(open) {

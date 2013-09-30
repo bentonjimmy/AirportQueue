@@ -3,6 +3,13 @@ package domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Sub class of ServiceStation.  This object represents the service station for 
+ * First class passengers.  The service time for a passenger is based off of the 
+ * class of the passenger.
+ * @author Jim Benton
+ *
+ */
 public class FirstClassServiceStation extends ServiceStation {
 
 	public FirstClassServiceStation() {
@@ -13,6 +20,12 @@ public class FirstClassServiceStation extends ServiceStation {
 		super(id, null, heaps);
 	}
 	
+	/**
+	 * This method will retrieve the next available person from the First Class and Coach
+	 * queues.  The method checks if the queue contains the type of customer
+	 * that is handled by this station and that it is not empty.  If both conditions
+	 * are met then the next available person is removed from queue.
+	 */
 	public void getNextCustomer()
 	{
     	TypeHeap chosenQueue = null;
@@ -38,6 +51,7 @@ public class FirstClassServiceStation extends ServiceStation {
     	if(tempCustomer != null)
     	{
     		this.setCustomer(tempCustomer);
+    		//Message printed to screen with information about the dequeue
     		System.out.println("Dequeue Customer ID:" + tempCustomer.getId()+" of type "+ tempCustomer.getType() +
     				", Queue ID:" + chosenQueue.getId()  + " Station Type: First Class");
     	}

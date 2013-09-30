@@ -2,6 +2,12 @@ package domain;
 
 import java.util.Vector;
 
+/**
+ * A heap that will hold Customers.  The order of the heap is based 
+ * off of arrival time with the earliest at the top.
+ * @author Jim Benton
+ *
+ */
 public class Heap 
 {
 	public Heap()
@@ -12,7 +18,7 @@ public class Heap
 	/**
 	 * Returns the number of customers currently in the Heap
 	 *
-	 * @return int
+	 * @return int - number of Customers
 	 */
 	public int getSize()
 	{
@@ -46,7 +52,7 @@ public class Heap
 	 * Adds the given customer to the heap.
 	 * @param customer - the Customer to add
 	 */
-	public void addCustomer(Customer customer)
+	public synchronized void addCustomer(Customer customer)
 	{
 		if(customer != null)
 		{
@@ -58,6 +64,10 @@ public class Heap
 		}
 	}
 	
+	/**
+	 * The method that puts the new added Customer in the correct position of
+	 * the heap.
+	 */
 	protected void bubbleUp()
 	{
 		Customer parent = null;
@@ -117,8 +127,6 @@ public class Heap
 					{
 						bubbleDown();
 					}
-			
-			
 			return temp;
 		}
 		else
@@ -127,6 +135,9 @@ public class Heap
 		}
 	}
 	
+	/**
+	 * The method that fixes the heap after a Customer has been removed
+	 */
 	protected void bubbleDown()
 	{
 		int i = 0;
@@ -191,7 +202,7 @@ public class Heap
 			
 			bubbleNode = vector.get(bubblePos);
 			
-		}while((bubbleNode.getArrivalTime() > child.getArrivalTime()));//this needs to change
+		}while((bubbleNode.getArrivalTime() > child.getArrivalTime()));
 	}
 	
 	private Vector<Customer> vector;

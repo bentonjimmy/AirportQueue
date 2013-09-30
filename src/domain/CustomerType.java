@@ -1,6 +1,6 @@
 package domain;
 
-/*
+/**
  * Class CustomerType                *
  * Represent a type that can be assigned to Customer, Queue, and ServiceStation
  *
@@ -62,22 +62,25 @@ public class CustomerType {
 	public void setArrivalSpread(int arrivalSpread) {
 		this.arrivalSpread = arrivalSpread;
 	}
-
+	
+	/**
+	 * Creates a group of new customers based off parameters.
+	 * @param number - The number of customers that will be created
+	 * @param arrivalTime - The time that customers will arrive/be created
+	 * @return Customer[] - An array of Customers
+	 */
 	public Customer[] spawn(int number, long arrivalTime) {
-        //if there is less customers left
-    	/*
-        if(this.getTotalCustomers() < number) {
-            number = this.getTotalCustomers();
-        }
-        */
         Customer[] customers = new Customer[number];
         for(int i=0;i<number;i++) {
             customers[i] = new Customer(this.getName(), arrivalTime, serviceTime);
         }
-        //this.setTotalCustomers(this.getTotalCustomers()-number);
+  
         return customers;
     }
 
+	/**
+	 * Checks CustomerType objects for equality.
+	 */
     public boolean equals(Object o) {
         if(o instanceof CustomerType) {
             return (this.getName() == ((CustomerType)o).getName());

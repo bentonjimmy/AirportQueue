@@ -1,9 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
+/**
+ * This class is used to capture the values given by the user.  The values stored in this
+ * object are then retrieved by the Simulation.
+ * @author Jim Benton
+ *
+ */
 public class Config 
 {
 	public Config()

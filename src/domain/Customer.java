@@ -1,8 +1,7 @@
 package domain;
 
 import java.util.UUID;
-/*
- * Class Customer
+/**
  * Represent a customer that being dispatched by the dispatcher,
  * inserted into queues, and serviced by the service stations
  * id: short string that uniquely identifies this customer
@@ -58,6 +57,13 @@ public class Customer {
 		this.serviceTime = serviceTime;
 	}
 	
+	/**
+	 * Returns the amount of time that a type of customer must wait to be
+	 * services.  The actual time that it takes to service a customer will
+	 * vary but at most will be the amount given by the user.
+	 * @return int - the amount of time the customer will wait at the service
+	 * station
+	 */
 	public int serviceWait()
 	{
 		int wait = (int) ((Math.random() * 1000) % serviceTime);
@@ -69,6 +75,10 @@ public class Customer {
 		return wait * 1000;
 	}
 
+	/**
+	 * Checks for equality of two Customer objects.
+	 * @return boolean - true if the two Customers are the same
+	 */
 	public boolean equals(Object other)
     {
         if(this == other)

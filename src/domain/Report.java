@@ -9,7 +9,7 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 /**
- * An object that represent the resulting report
+ * An object that represents the report created for the simulation
  */
 public class Report {
 
@@ -20,7 +20,11 @@ public class Report {
     	this.observer = observer;
         formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
     }
-
+   
+    /**
+     * Prints the report to a JTextPane
+     * @param tpDisplay - The JTextPane that will display the report
+     */
     public void writeResult(JTextPane tpDisplay) {
     	
     	Document doc = tpDisplay.getDocument();
